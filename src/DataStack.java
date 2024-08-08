@@ -4,10 +4,9 @@ import java.util.Stack;
 
 public class DataStack {
     private static DataStack instance;
-    private final Stack<Integer> stack;
-
+    private final Map<Integer, Stack<Integer>> datastack;
     private DataStack() {
-        stack = new Stack<>();
+        datastack = new HashMap<>();
     }
 
     public static DataStack getInstance() {
@@ -17,8 +16,11 @@ public class DataStack {
         return instance;
     }
 
-    public Stack<Integer> getStack() {
-        return this.stack;
+    public synchronized Stack<Integer> getDataStack(int id) {
+        if (!datastack.containsKey(id)) {
+            datastack.put(id, new Stack<>());
+        }
+        return this.datastack.get(id);
     }
 
 }

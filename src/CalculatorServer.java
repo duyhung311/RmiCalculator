@@ -6,6 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class CalculatorServer extends CalculatorImplementation {
 
     private static CalculatorServer instance;
+    private static CalculatorImplementation calculator;
 
     public CalculatorServer() throws RemoteException {
     }
@@ -21,10 +22,11 @@ public class CalculatorServer extends CalculatorImplementation {
     public static void main(String[] args) {
 
         try {
+
             CalculatorServer obj = new CalculatorServer();
 
             // Bind the remote object's stub in the registry
-            Registry registry = LocateRegistry.createRegistry(8080);
+            Registry registry = LocateRegistry.createRegistry(8081);
             registry.rebind("Hello", obj);
 
             System.out.println("Server Hello ready");

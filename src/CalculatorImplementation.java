@@ -31,85 +31,85 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
     }
 
     @Override
-    public void pushValue(int val) {
-        dataStack.getStack().push(val);
+    public void pushValue(int clientId, int val) {
+        dataStack.getDataStack(clientId).push(val);
     }
 
     @Override
-    public void pushOperation(String operator) {
-        calculateResult(operator);
+    public void pushOperation(int clientIds, String operator) {
+        calculateResult(clientIds, operator);
     }
 
     @Override
-    public int pop() {
-        return dataStack.getStack().pop();
+    public int pop(int clientId) throws RemoteException {
+        return dataStack.getDataStack(clientId).pop();
     }
 
     @Override
-    public boolean isEmpty() {
-        return dataStack.getStack().isEmpty();
+    public boolean isEmpty(int clientId) throws RemoteException {
+        return dataStack.getDataStack(clientId).isEmpty();
     }
 
     @Override
-    public int delayPop(int millis) throws InterruptedException {
+    public int delayPop(int clientId, int millis) throws InterruptedException {
         // consider CompletableFuture#deplayOperation(long, TimeUnit);
         Thread.sleep(millis);
-        return dataStack.getStack().pop();
+        return dataStack.getDataStack(clientId).pop();
     }
 
-    private void calculateResult(String op) {
+    private void calculateResult(int clientId, String op) {
         switch (op) {
             case "max":
-                max();
+                max(clientId);
                 break;
             case "min":
-                min();
+                min(clientId);
                 break;
             case "gcd":
-                gcd();
+                gcd(clientId);
                 break;
             case "lcm":
-                lcm();
+                lcm(clientId);
                 break;
         }
     }
 
-    private synchronized void max() {
+    private synchronized void max(int clientId) {
         int max = Integer.MIN_VALUE;
 
-        while (!dataStack.getStack().isEmpty()) {
-            int front = dataStack.getStack().pop();
+        while (!dataStack.getDataStack(clientId).isEmpty()) {
+            int front = dataStack.getDataStack(clientId).pop();
             max = Math.max(max, front);
         }
 
-        dataStack.getStack().push(max);
+        dataStack.getDataStack(clientId).push(max);
     }
 
-    private synchronized void min() {
+    private synchronized void min(int clientId) {
         int min = Integer.MAX_VALUE;
 
-        while (!dataStack.getStack().isEmpty()) {
-            int front = dataStack.getStack().pop();
+        while (!dataStack.getDataStack(clientId).isEmpty()) {
+            int front = dataStack.getDataStack(clientId).pop();
             min = Math.min(min, front);
         }
 
-        dataStack.getStack().push(min);
+        dataStack.getDataStack(clientId).push(min);
     }
 
-    private synchronized void gcd() {
-        if (dataStack.getStack().size() < 2) {
+    private synchronized void gcd(int clientId) {
+        if (dataStack.getDataStack(clientId).size() < 2) {
             return;
         }
-        int firstElement = dataStack.getStack().pop();
-        int secondElement = dataStack.getStack().pop();
+        int firstElement = dataStack.getDataStack(clientId).pop();
+        int secondElement = dataStack.getDataStack(clientId).pop();
 
         int gcd = findGcd(firstElement, secondElement);
 
-        while (!dataStack.getStack().isEmpty()) {
-            int front = dataStack.getStack().pop();
+        while (!dataStack.getDataStack(clientId).isEmpty()) {
+            int front = dataStack.getDataStack(clientId).pop();
             gcd = findGcd(front, gcd);
         }
-        dataStack.getStack().push(gcd);
+        dataStack.getDataStack(clientId).push(gcd);
     }
 
     private synchronized int findGcd(int a, int b) {
@@ -125,21 +125,21 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
     /**
      * Find lcm based on gcd
     * */
-    private synchronized void lcm() {
-        if (dataStack.getStack().size() < 2) {
+    private synchronized void lcm(int clientId) {
+        if (dataStack.getDataStack(clientId).size() < 2) {
             return;
         }
-        int firstElement = dataStack.getStack().pop();
-        int secondElement = dataStack.getStack().pop();
+        int firstElement = dataStack.getDataStack(clientId).pop();
+        int secondElement = dataStack.getDataStack(clientId).pop();
 
         int gcd = findGcd(firstElement, secondElement);
         int lcm = (firstElement * secondElement) / gcd;
 
-        while (!dataStack.getStack().isEmpty()) {
-            int front = dataStack.getStack().pop();
+        while (!dataStack.getDataStack(clientId).isEmpty()) {
+            int front = dataStack.getDataStack(clientId).pop();
             gcd = findGcd(front, lcm);
             lcm = (front * lcm) / gcd;
         }
-        dataStack.getStack().push(lcm);
+        dataStack.getDataStack(clientId).push(lcm);
     }
 }
