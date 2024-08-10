@@ -1,5 +1,3 @@
-package uoa.hungluong;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.concurrent.ExecutionException;

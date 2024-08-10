@@ -1,5 +1,3 @@
-package uoa.hungluong;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,17 +13,8 @@ public class DataStack implements Serializable {
     }
 
     public int getNewId(Calculator calculator) {
-//
-//        if (clientIds.containsKey(calculator)) {
-//            System.out.println("Already have a new id for " + calculator);
-//            return clientIds.get(calculator);
-//        }
-
-//        clientIds.put(calculator, id);
-        System.err.println("creating new CLIENT with id: " + id);
         return id++;
     }
-
 
     public static DataStack getInstance() {
         if (instance == null) {

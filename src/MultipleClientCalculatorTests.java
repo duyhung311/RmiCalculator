@@ -1,10 +1,6 @@
-package target;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import uoa.hungluong.CalculatorClientImpl;
-import uoa.hungluong.CalculatorServer;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

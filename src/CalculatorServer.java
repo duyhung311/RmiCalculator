@@ -1,10 +1,8 @@
-package uoa.hungluong;
-
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-public class CalculatorServer extends CalculatorImplementation{
+public class CalculatorServer extends CalculatorImplementation {
 
     private static CalculatorServer instance;
 
@@ -17,9 +15,9 @@ public class CalculatorServer extends CalculatorImplementation{
         }
         return instance;
     }
+
     // 'Singleton' design pattern
     public static void main(String[] args) {
-
         try {
             CalculatorServer obj = new CalculatorServer();
             // Bind the remote object's stub in the registry

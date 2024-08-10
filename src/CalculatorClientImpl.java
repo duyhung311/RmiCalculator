@@ -1,5 +1,3 @@
-package uoa.hungluong;
-
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -73,10 +71,6 @@ public class CalculatorClientImpl {
                 System.out.println(delayPop(scanner.nextInt()));
 
         }
-    }
-
-    public Calculator getStub1() {
-        return stub1;
     }
 
     public void pushValue(int value) throws RemoteException {

@@ -1,5 +1,3 @@
-package uoa.hungluong;
-
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -21,33 +19,53 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Ser
     }
 
     /**
-     * Push {@code val into the data stacks }
+     * Push {@code val} into the data stack
      *
-     * @param clientId
-     * @param val
+     * @param clientId tells which client is performing the push
+     * @param val value to be pushed
      */
     @Override
     public void pushValue(int clientId, int val) {
-        System.out.println("Push to client id = " + clientId);
         dataStack.getDataStack(clientId).push(val);
     }
 
+    /**
+     * Push {@code operator} into the data stack
+     *
+     * @param clientId tells which client is performing the push
+     * @param operator operator to be pushed (lcm, gcd, max, min)
+     */
     @Override
     public void pushOperation(int clientId, String operator) {
         calculateResult(clientId, operator);
     }
 
+    /**
+     * Pop 1 element out of the data stacks
+     *
+     * @param clientId tells which client is performing the pop
+     */
     @Override
     public int pop(int clientId) throws RemoteException {
-        System.out.println("Pop from client id = " + clientId);
         return dataStack.getDataStack(clientId).pop();
     }
 
+    /**
+     * Check if the associated stack is empty
+     *
+     * @param clientId tells which client is performing the isEmpty
+     */
     @Override
     public boolean isEmpty(int clientId) throws RemoteException {
         return dataStack.getDataStack(clientId).isEmpty();
     }
 
+    /**
+     * Delay for some time until popping
+     *
+     * @param clientId tells which client is performing the isEmpty
+     * @param millis how many millis second to wait
+     */
     @Override
     public int delayPop(int clientId, int millis) throws InterruptedException {
         // consider CompletableFuture#deplayOperation(long, TimeUnit);
