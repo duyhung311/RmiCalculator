@@ -1,5 +1,5 @@
-import java.rmi.AlreadyBoundException;
-import java.rmi.Remote;
+package uoa.hungluong;
+
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -21,22 +21,15 @@ public class CalculatorServer extends CalculatorImplementation{
     public static void main(String[] args) {
 
         try {
-
             CalculatorServer obj = new CalculatorServer();
-
             // Bind the remote object's stub in the registry
             Registry registry = LocateRegistry.getRegistry(1099);
             registry.rebind("Server", obj);
 
             System.out.println("Server Hello ready");
         } catch (Exception e) {
-            System.err.println("Server exception: " + e.toString());
+            System.err.println("Server exception: " + e);
             e.printStackTrace();
         }
     }
-
-
-
-
-
 }

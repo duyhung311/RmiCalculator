@@ -1,3 +1,5 @@
+package uoa.hungluong;
+
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -8,10 +10,11 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Ser
     @Override
     public int getId() {
 
-        int a = dataStack.getNewId( this);
+        int a = dataStack.getNewId(this);
         System.out.println("New client comes in and is issued with id = " + a);
         return a;
     }
+
     public CalculatorImplementation() throws RemoteException {
         super();
         dataStack = DataStack.getInstance();
@@ -19,11 +22,13 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Ser
 
     /**
      * Push {@code val into the data stacks }
+     *
      * @param clientId
      * @param val
      */
     @Override
     public void pushValue(int clientId, int val) {
+        System.out.println("Push to client id = " + clientId);
         dataStack.getDataStack(clientId).push(val);
     }
 
@@ -34,6 +39,7 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Ser
 
     @Override
     public int pop(int clientId) throws RemoteException {
+        System.out.println("Pop from client id = " + clientId);
         return dataStack.getDataStack(clientId).pop();
     }
 
@@ -73,8 +79,7 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Ser
      * and push the result onto the stack
      *
      * @param clientId key with which the specified client is to be associated
-     *
-     * */
+     */
     private synchronized void max(int clientId) {
         int max = Integer.MIN_VALUE;
 
@@ -91,8 +96,7 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Ser
      * and push the result onto the stack
      *
      * @param clientId key with which the specified client is to be associated
-     *
-     * */
+     */
     private synchronized void min(int clientId) {
         int min = Integer.MAX_VALUE;
 
@@ -109,8 +113,7 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Ser
      * and push the result onto the stack
      *
      * @param clientId key with which the specified client is to be associated
-     *
-     * */
+     */
     private synchronized void gcd(int clientId) {
         if (dataStack.getDataStack(clientId).size() < 2) {
             return;

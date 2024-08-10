@@ -1,29 +1,37 @@
+package uoa.hungluong;
+
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.SortedMap;
 import java.util.concurrent.ExecutionException;
 
 public class CalculatorClientImpl {
     private Calculator stub1 = new CalculatorImplementation();
     private int id;
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
+
     public CalculatorClientImpl() throws RemoteException {
     }
 
-    public void connectAndRun() throws RemoteException, ExecutionException, InterruptedException {
+    public CalculatorClientImpl connect() {
         int host = 1099;
 
         try {
             Registry registry = LocateRegistry.getRegistry(host);
             stub1 = (Calculator) registry.lookup("Server");
+            if (Objects.isNull(stub1))
+                return null;
             id = stub1.getId();
         } catch (Exception e) {
-            System.err.println("Client exception: " + e.toString());
+            System.err.println("Client exception: " + e);
             e.printStackTrace();
         }
+        return this;
+    }
+
+    public void run() throws RemoteException, ExecutionException, InterruptedException {
         if (Objects.isNull(stub1))
             return;
         System.err.println(stub1.hashCode());
@@ -34,7 +42,6 @@ public class CalculatorClientImpl {
                 break;
             doOps(choice);
         }
-
     }
 
     private int printInstructionAndGetOption() {
@@ -47,16 +54,20 @@ public class CalculatorClientImpl {
         return scanner.nextInt();
     }
 
-    private void doOps(int choice) throws RemoteException, ExecutionException, InterruptedException {
+    public void doOps(int choice) throws RemoteException, ExecutionException, InterruptedException {
         switch (choice) {
             case 1:
-                pushValue(); break;
+                pushValue(scanner.nextInt());
+                break;
             case 2:
-                pushOperation(); break;
+                pushOperation(scanner.nextLine());
+                break;
             case 3:
-                System.out.println(pop()); break;
+                System.out.println(pop());
+                break;
             case 4:
-                System.out.println(isEmpty()); break;
+                System.out.println(isEmpty());
+                break;
             case 5:
                 System.out.println("Return result after how much millisecond? ");
                 System.out.println(delayPop(scanner.nextInt()));
@@ -64,27 +75,27 @@ public class CalculatorClientImpl {
         }
     }
 
-    private void pushValue() throws RemoteException {
-        Scanner scanner = new Scanner(System.in);
-        int val = scanner.nextInt();
-        stub1.pushValue(id, val);
+    public Calculator getStub1() {
+        return stub1;
     }
-    private void pushOperation() throws RemoteException {
-        Scanner scanner = new Scanner(System.in);
-        String op = scanner.next();
-        switch (op) {
-            case "lcm":
-                stub1.pushOperation(id, op); break;
-        }
+
+    public void pushValue(int value) throws RemoteException {
+        stub1.pushValue(id, value);
     }
-    private int pop() throws RemoteException {
+
+    public void pushOperation(String op) throws RemoteException {
+        stub1.pushOperation(id, op);
+    }
+
+    public int pop() throws RemoteException {
         return stub1.pop(id);
     }
-    private boolean isEmpty() throws RemoteException {
+
+    public boolean isEmpty() throws RemoteException {
         return stub1.isEmpty(id);
     }
 
-    private int delayPop(int millis) throws RemoteException, ExecutionException, InterruptedException {
+    public int delayPop(int millis) throws RemoteException, ExecutionException, InterruptedException {
         return stub1.delayPop(id, millis);
     }
 }

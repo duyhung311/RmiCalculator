@@ -1,3 +1,5 @@
+import uoa.hungluong.Calculator;
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.HashMap;
@@ -7,7 +9,7 @@ import java.util.Map;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     private static int id = 0;
-    private static Map<Calculator, Integer> clientIds = new HashMap<>();
+    private static final Map<Calculator, Integer> clientIds = new HashMap<>();
     private static int getNewId(Calculator calculator) {
         if (clientIds.containsKey(calculator)) {
             return clientIds.get(calculator);
@@ -36,7 +38,7 @@ public class Main {
             System.out.println("response: " + stub1.isEmpty(getNewId(stub1)));
 
         } catch (Exception e) {
-            System.err.println("Client exception: " + e.toString());
+            System.err.println("Client exception: " + e);
             e.printStackTrace();
         }
     }

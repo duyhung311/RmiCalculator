@@ -1,3 +1,5 @@
+package uoa.hungluong;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +10,7 @@ public class DataStack implements Serializable {
     private static final Map<Integer, Stack<Integer>> datastack = new HashMap<>();
     private static final Map<Calculator, Integer> clientIds = new HashMap<>();
     private static int id = 0;
+
     private DataStack() {
     }
 
@@ -22,7 +25,6 @@ public class DataStack implements Serializable {
         System.err.println("creating new CLIENT with id: " + id);
         return id++;
     }
-
 
 
     public static DataStack getInstance() {

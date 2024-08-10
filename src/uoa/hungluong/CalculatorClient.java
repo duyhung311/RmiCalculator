@@ -1,8 +1,6 @@
+package uoa.hungluong;
+
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.Objects;
-import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
 public class CalculatorClient {
@@ -35,7 +33,9 @@ public class CalculatorClient {
 
     public static void main(String[] args) throws RemoteException, ExecutionException, InterruptedException {
         CalculatorClientImpl calculatorClient = new CalculatorClientImpl();
-        calculatorClient.connectAndRun();
+        calculatorClient
+                .connect()
+                .run();
     }
 
 
