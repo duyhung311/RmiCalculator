@@ -1,16 +1,15 @@
+import java.rmi.AlreadyBoundException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 
-public class CalculatorServer extends CalculatorImplementation {
+public class CalculatorServer extends CalculatorImplementation{
 
     private static CalculatorServer instance;
-    private static CalculatorImplementation calculator;
 
     public CalculatorServer() throws RemoteException {
     }
-
 
     public static CalculatorServer getInstance() throws RemoteException {
         if (instance == null) {
@@ -26,8 +25,8 @@ public class CalculatorServer extends CalculatorImplementation {
             CalculatorServer obj = new CalculatorServer();
 
             // Bind the remote object's stub in the registry
-            Registry registry = LocateRegistry.createRegistry(8081);
-            registry.rebind("Hello", obj);
+            Registry registry = LocateRegistry.getRegistry(1099);
+            registry.rebind("Server", obj);
 
             System.out.println("Server Hello ready");
         } catch (Exception e) {

@@ -1,13 +1,29 @@
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-public class DataStack {
+public class DataStack implements Serializable {
     private static DataStack instance;
-    private final Map<Integer, Stack<Integer>> datastack;
+    private static final Map<Integer, Stack<Integer>> datastack = new HashMap<>();
+    private static final Map<Calculator, Integer> clientIds = new HashMap<>();
+    private static int id = 0;
     private DataStack() {
-        datastack = new HashMap<>();
     }
+
+    public int getNewId(Calculator calculator) {
+//
+//        if (clientIds.containsKey(calculator)) {
+//            System.out.println("Already have a new id for " + calculator);
+//            return clientIds.get(calculator);
+//        }
+
+//        clientIds.put(calculator, id);
+        System.err.println("creating new CLIENT with id: " + id);
+        return id++;
+    }
+
+
 
     public static DataStack getInstance() {
         if (instance == null) {
@@ -20,7 +36,7 @@ public class DataStack {
         if (!datastack.containsKey(id)) {
             datastack.put(id, new Stack<>());
         }
-        return this.datastack.get(id);
+        return datastack.get(id);
     }
 
 }

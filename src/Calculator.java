@@ -14,4 +14,5 @@ public interface Calculator extends Remote {
 
     int delayPop(int clientId, int millis) throws RemoteException, ExecutionException, InterruptedException;
 
+    int getId() throws RemoteException;
 }
