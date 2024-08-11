@@ -24,7 +24,7 @@ public class CalculatorServer extends CalculatorImplementation {
             Registry registry = LocateRegistry.getRegistry(1099);
             registry.rebind("Server", obj);
 
-            System.out.println("Server Hello ready");
+            System.out.println("Server ready");
         } catch (Exception e) {
             System.err.println("Server exception: " + e);
             e.printStackTrace();

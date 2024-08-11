@@ -68,7 +68,6 @@ public class MultipleClientCalculatorTests {
         int clientOrder;
         CalculatorClientImpl currentClient;
         for (String testcase : testcases) {
-            System.out.println("reset");
             clientOrder = 0;
             currentClient = calculatorClients.get(clientOrder);
 
@@ -77,7 +76,6 @@ public class MultipleClientCalculatorTests {
 
             while (keyboard.hasNext()) {
                 String input = keyboard.next();
-                System.out.println("--" + input);
                 if (input.equals("-")) {
                     clientOrder++;
                     currentClient = calculatorClients.get(clientOrder);
@@ -93,16 +91,12 @@ public class MultipleClientCalculatorTests {
                 }
                 currentClient.pushValue(Integer.parseInt(input));
             }
-            System.out.println("till here");
-            System.out.println(testcase.charAt(0));
             int expected1 = keyboard.nextInt();
             int expected2 = keyboard.nextInt();
             int expected3 = keyboard.nextInt();
-            System.out.println(expected1 + " " + expected2 + " " + expected3);
             int client1Result = calculatorClients.getFirst().pop();
             int client2Result = calculatorClients.get(1).pop();
             int client3Result = calculatorClients.get(2).pop();
-
 
 //            System.out.println(expected + " " + res);
             assertEquals(expected1, client1Result);
